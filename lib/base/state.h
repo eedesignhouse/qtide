@@ -189,8 +189,6 @@ void state_init_resource();
 void state_quit();
 void state_reinit();
 
-extern int state_exitcode;
-extern bool state_exitflag;
 extern QEventLoop *evloop;
 extern QEventLoop *jevloop;
 
