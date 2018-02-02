@@ -130,13 +130,6 @@ QString Jcon::cmdr(string s)
 }
 
 // ---------------------------------------------------------------------
-// int Jcon::exec()
-// {
-//   if (jdllproc) return 0;
-//   return evloop->exec(QEventLoop::AllEvents|QEventLoop::WaitForMoreEvents);
-// }
-
-// ---------------------------------------------------------------------
 int Jcon::init(int argc, char* argv[])
 {
   void* callbacks[] = {(void*)Joutput,0,(void*)Jinput,0,(void*)SMCON};
@@ -243,11 +236,12 @@ void _stdcall Joutput(J jt,int type, char* s)
   Q_UNUSED(jt);
 
   if(MTYOEXIT==type) {
-// callback from jengine during jcon->cmd("2!:55[0")
+// callback from jengine after 2!:55
+    int rc=(intptr_t)s;
     jefree();
-    evloop->exit();
     state_quit();
-    exit((intptr_t)s);
+    evloop->exit(rc);
+    exit(rc);
     return;
   }
 

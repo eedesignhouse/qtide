@@ -458,8 +458,7 @@ void state_appname()
 // ---------------------------------------------------------------------
 int state_fini()
 {
-  evloop->exec(QEventLoop::AllEvents|QEventLoop::WaitForMoreEvents);
-  return 0;
+  return evloop->exec(QEventLoop::AllEvents|QEventLoop::WaitForMoreEvents);
 }
 
 // ---------------------------------------------------------------------
@@ -511,8 +510,7 @@ void state_quit()
 #endif
   if (term) {
     term->cleantemp();
-    delete term;
-    term=0;
+    term->deleteLater();
   }
 }
 
@@ -596,7 +594,7 @@ int state_run(int argc, char *argv[], char *lib, bool fhs, int fshowide, void *j
   if (jdllproc || (!jdllproc && (void*)-1!=jdlljt)) showide(false);
   if ((!jdllproc) && (!ShowIde) && Forms.isEmpty()) return 0;
   term->fini();
-  return state_fini();
+  return 0;
 }
 
 // ---------------------------------------------------------------------
